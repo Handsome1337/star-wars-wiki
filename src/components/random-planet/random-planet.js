@@ -32,7 +32,8 @@ export default class RandomPlanet extends Component {
     });
   };
 
-  onError = (err) => {
+  onError = () => {
+    clearInterval(this.interval);
     this.setState({
       error: true,
       loading: false
