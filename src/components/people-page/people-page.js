@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Row from './../row';
 import ErrorIndicator from'./../error-indicator';
 import ItemList from './../item-list';
 import PersonDetails from './../person-details';
@@ -32,18 +33,17 @@ export default class PeoplePage extends Component {
       return <ErrorIndicator />;
     }
 
+    const itemList = (
+      <ItemList
+      getData={this.swapiService.getAllPeople}
+      renderItem={({ name, gender, birthYear }) => `${name} (${gender}, ${birthYear})`}
+      onItemSelected={this.onPersonSelected} />
+    );
+
+    const personDetails = <PersonDetails personId={this.state.selectedPerson} />;
+
     return (
-      <div className="row mb2">
-        <div className="col-md-6">
-          <ItemList
-            getData={this.swapiService.getAllPeople}
-            renderItem={({ name, gender, birthYear }) => `${name} (${gender}, ${birthYear})`}
-            onItemSelected={this.onPersonSelected} />
-        </div>
-        <div className="col-md-6">
-          <PersonDetails personId={this.state.selectedPerson} />
-        </div>
-    </div>
+      <Row left={itemList} right={personDetails} />
     );
   }
 }
