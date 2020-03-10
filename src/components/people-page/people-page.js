@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Row from './../row';
 import ErrorBoundary from './../error-boundary';
 import ItemList from './../item-list';
-import PersonDetails from './../person-details';
+import ItemDetails from './../item-details';
 import SwapiService from './../../services/swapi-service';
 
 export default class PeoplePage extends Component {
@@ -23,7 +23,7 @@ export default class PeoplePage extends Component {
   render() {
     const itemList = (
       <ItemList
-        getData={this.swapiService.getAllPeople}
+        getData={this.swapiService.getAllStarships}
         onItemSelected={this.onPersonSelected}>
 
         {(item) => `${item.name} (${item.birthYear})`}
@@ -33,7 +33,10 @@ export default class PeoplePage extends Component {
 
     const personDetails = (
       <ErrorBoundary>
-        <PersonDetails personId={this.state.selectedPerson} />
+        <ItemDetails
+          itemId={this.state.selectedPerson}
+          getData={this.swapiService.getStarship}
+          getImageURL={this.swapiService.getStarshipImage} />
       </ErrorBoundary>
     );
 
