@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
 
-import ErrorIndicator from './../error-indicator';
+import ErrorBoundary from './../error-boundary';
 import Header from './../header';
 import RandomPlanet from './../random-planet';
 import PeoplePage from './../people-page';
+import SwapiService from './../../services/swapi-service';
+
+import { SwapiServiceProvider } from './../swapi-service-context';
 
 import './app.css';
 
 export default class App extends Component {
 
-  state = {
-    showRandomPlanet: true,
-    hasError: false
-  };
+  swapiService = new SwapiService();
 
-  componentDidCatch() {
-    this.setState({
-      hasError: true
-    });
-  }
+  state = {
+    showRandomPlanet: true
+  };
 
   toggleRandomPlanet = () => {
     this.setState((state) => {
@@ -29,30 +27,29 @@ export default class App extends Component {
   };
 
   render() {
-
-    if (this.state.hasError) {
-      return <ErrorIndicator />;
-    }
-
     const planet = this.state.showRandomPlanet ?
       <RandomPlanet /> :
       null;
 
     return (
-      <div className="star-wars-wiki-app">
-        <Header />
-        { planet }
+      <ErrorBoundary>
+        <SwapiServiceProvider value={this.swapiService}>
+          <div className="star-wars-wiki-app">
+            <Header />
+            { planet }
 
-        <div className="row mb2 button-row">
-          <button
-            className="toggle-planet btn btn-warning btn-lg"
-            onClick={this.toggleRandomPlanet}>
-            Toggle Random Planet
-          </button>
-        </div>
+            <div className="row mb2 button-row">
+              <button
+                className="toggle-planet btn btn-warning btn-lg"
+                onClick={this.toggleRandomPlanet}>
+                Toggle Random Planet
+              </button>
+            </div>
 
-        <PeoplePage />
-      </div>
+            <PeoplePage />
+          </div>
+        </SwapiServiceProvider>
+      </ErrorBoundary>
     );
   }
 };
