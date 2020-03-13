@@ -6,28 +6,25 @@ import {
   PersonList,
   PersonDetails
 } from './../sw-components';
-import SwapiService from './../../services/swapi-service';
 
 export default class PeoplePage extends Component {
 
-  swapiService = new SwapiService();
-
   state = {
-    selectedPerson: null
+    selectedItem: null
   };
 
-  onPersonSelected = (id) => {
+  onItemSelected = (id) => {
     this.setState({
-      selectedPerson: id
+      selectedItem: id
     });
   };
 
   render() {
-    const personList = <PersonList onItemSelected={this.onPersonSelected} />;
+    const personList = <PersonList onItemSelected={this.onItemSelected} />;
 
     const personDetails = (
       <ErrorBoundary>
-        <PersonDetails itemId={this.state.selectedPerson} />
+        <PersonDetails itemId={this.state.selectedItem} />
       </ErrorBoundary>
     );
 
