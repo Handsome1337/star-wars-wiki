@@ -5,6 +5,8 @@ import Spinner from './../spinner';
 const withData = (View) => {
   return class extends Component {
 
+    _cancelled = false;
+
     state = {
       data: null
     }
@@ -19,12 +21,16 @@ const withData = (View) => {
       }
     }
 
+    componentWillUnmount() {
+      this._cancelled = true;
+    }
+
     update() {
       this.props.getData()
       .then((data) => {
-        this.setState({
-          data
-         })
+        !this._cancelled && this.setState({
+        data
+        })
       });
     }
 

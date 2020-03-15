@@ -3,7 +3,8 @@ import withChildFunction from './with-child-function';
 import withSwapiService from './with-spawi-service';
 import compose from './compose';
 
-export { withData,
+export {
+  withData,
   withChildFunction,
   withSwapiService,
   compose

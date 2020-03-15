@@ -5,4 +5,7 @@ const {
   Consumer : SwapiServiceConsumer
 } = React.createContext();
 
-export { SwapiServiceProvider, SwapiServiceConsumer };
+export {
+  SwapiServiceProvider,
+  SwapiServiceConsumer
+};
