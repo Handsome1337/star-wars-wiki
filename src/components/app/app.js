@@ -10,6 +10,8 @@ import { SwapiServiceProvider } from './../swapi-service-context';
 
 import './app.css';
 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 export default class App extends Component {
 
   swapiService = new SwapiService();
@@ -18,13 +20,17 @@ export default class App extends Component {
     return (
       <ErrorBoundary>
         <SwapiServiceProvider value={this.swapiService}>
-          <div className="star-wars-wiki-app">
-            <Header />
-            <RandomPlanet />
-            <PeoplePage />
-            <PlanetsPage />
-            <StarshipsPage />
-          </div>
+          <Router>
+            <div className="star-wars-wiki-app">
+              <Header />
+              <RandomPlanet />
+
+              <Route path="/people" component={PeoplePage} />
+              <Route path="/planets" component={PlanetsPage} />
+              <Route path="/starships" component={StarshipsPage} />
+
+            </div>
+          </Router>
         </SwapiServiceProvider>
       </ErrorBoundary>
     );
